@@ -3,6 +3,35 @@
 # to select the desired level
 difficulty = "1" # sample data, normally the user should choose the difficulty
 
+print("Hello to our Hangman Game!")
+print("Please choose a level to start!")
+choosing = int(input("Choose a difficulity (1-3): ")) 
+
+while choosing != 1 or choosing != 2 or choosing != 3:
+        choosing = int(input("Try again! "))
+
+def difficulity(choosing):
+    lives = 0
+    if choosing == 1:
+        lives = 5
+        print("Lives " + str(lives))
+            #import smaller word
+    elif choosing == 2:
+        lives = 3
+        print("Lives " + str(lives))
+            #import longer word
+    elif choosing == 3:
+        lives = 1
+        print("Lives " + str(lives))
+            #import longest word
+    else:
+        return ("This is not a difficulity level, choose from 1-3!")
+    return lives
+
+choosen_lives = difficulity(choosing)
+print(choosen_lives)
+
+
 
 # STEP 2
 # based on the chosen difficulty level, set the values 
@@ -10,10 +39,23 @@ difficulty = "1" # sample data, normally the user should choose the difficulty
 word_to_guess = "Cairo" # sample data, normally the word should be chosen from the countries-and-capitals.txt
 lives = 5 # sample data, normally the lives should be chosen based on the difficulty
 
+import random
+list_ = open("countries-and-capitals.txt").read().split()
+
+def get_word():
+    word = random.choice(word_to_guess)
+    return word.upper()
 
 # STEP 3
 # display the chosen word to guess with all letters replaced by "_"
 # for example instead of "Cairo" display "_ _ _ _ _"
+
+def play(word_to_guess):
+    word_completion = "_" * len(word)
+    guessed = False
+    guessed_letters = []
+    guessed_words = []
+    tries = lives
 
 
 # STEP 4
@@ -22,6 +64,8 @@ lives = 5 # sample data, normally the lives should be chosen based on the diffic
 # "quit", "Quit", "QUit", "QUIt", "QUIT", "QuIT"... you get the idea :)
 # HINT: use the upper() or lower() built-in Python functions
 
+def guess(letter):
+    input("Please guess a letter or word: ").upper()
 
 # STEP 5
 # validate if the typed letter is already in the tried letters

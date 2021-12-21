@@ -25,13 +25,13 @@ print(f"You choosed the difficulity {choosing_int}.")
 def lives(choosing_int):
     lives = 0
     if choosing_int == 1:
-        lives = 15
+        lives = 8
             #import smaller word
     elif choosing_int == 2:
-        lives = 10
+        lives = 6
             #import longer word
     else:
-        lives = 5
+        lives = 4
             #import longest word
     return lives
 
@@ -133,6 +133,100 @@ print(guess)
 # otherwise display "_".
 
 def present(guess, word_to_guess, secret_word:str, lives):
+    hangman = (
+
+"""
+   _________
+    |/        
+    |              
+    |                
+    |                 
+    |               
+    |                   
+    |___                 
+    """,
+
+"""
+   _________
+    |/   |      
+    |              
+    |                
+    |                 
+    |               
+    |                   
+    |___                 
+    H""",
+
+"""
+   _________       
+    |/   |              
+    |   (_)
+    |                         
+    |                       
+    |                         
+    |                          
+    |___                       
+    HA""",
+
+"""
+   ________               
+    |/   |                   
+    |   (_)                  
+    |    |                     
+    |    |                    
+    |                           
+    |                            
+    |___                    
+    HAN""",
+
+
+"""
+   _________             
+    |/   |               
+    |   (_)                   
+    |   /|                     
+    |    |                    
+    |                        
+    |                          
+    |___                          
+    HANG""",
+
+
+"""
+   _________              
+    |/   |                     
+    |   (_)                     
+    |   /|\                    
+    |    |                       
+    |                             
+    |                            
+    |___                          
+    HANGM""",
+
+
+
+"""
+   ________                   
+    |/   |                         
+    |   (_)                      
+    |   /|\                             
+    |    |                          
+    |   /                            
+    |                                  
+    |___                              
+    HANGMA""",
+
+
+"""
+   ________
+    |/   |     
+    |   (_)    
+    |   /|\           
+    |    |        
+    |   / \        
+    |               
+    |___           
+    HANGMAN""")
     new_secret_word = []
     if guess in word_to_guess:
         for i in range(len(word_to_guess)-1):
@@ -145,6 +239,7 @@ def present(guess, word_to_guess, secret_word:str, lives):
     else:
         lives -= 1
         print("Lives ", lives)
+        print(hangman[8 - lives + 1])
     return secret_word, lives
 
 secret_word, lives = present(guess, word_to_guess, secret_word, lives)

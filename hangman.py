@@ -1,36 +1,78 @@
 # PART 1
 # display a menu with at least 3 difficulty choices and ask the user
 # to select the desired level
-difficulty = "1" # sample data, normally the user should choose the difficulty
+#difficulty = "1" # sample data, normally the user should choose the difficulty
 
 print("Hello to our Hangman Game!")
 print("Please choose a level to start!")
-choosing = int(input("Choose a difficulity (1-3): ")) 
 
-while choosing != 1 or choosing != 2 or choosing != 3:
-        choosing = int(input("Try again! "))
+def choosing_level():
+    choosing = input("Choose a difficulity (1-3): ")
+    while True:
+        try:
+            choosing_int = int(choosing)
+            if choosing_int > 0 and choosing_int < 4:
+                return choosing_int
+            else:
+                choosing = input("Please choose from 1-3: ")
+        except ValueError:
+            choosing = input("Please choose a number: ")
+        
+choosing_int = choosing_level()
 
-def difficulity(choosing):
+print(f"You choosed the difficulity {choosing_int}.")
+
+def lives(choosing_int):
     lives = 0
-    if choosing == 1:
-        lives = 5
-        print("Lives " + str(lives))
+    if choosing_int == 1:
+        lives = 15
             #import smaller word
-    elif choosing == 2:
-        lives = 3
-        print("Lives " + str(lives))
+    elif choosing_int == 2:
+        lives = 13
             #import longer word
-    elif choosing == 3:
-        lives = 1
-        print("Lives " + str(lives))
-            #import longest word
     else:
-        return ("This is not a difficulity level, choose from 1-3!")
+        lives = 11
+            #import longest word
     return lives
 
-choosen_lives = difficulity(choosing)
-print(choosen_lives)
+lives = lives(choosing_int)
+print(f"You have {lives} lives.")
 
+
+
+def country_or_capital():
+    country_or_capital = input("Choose from countries or capitals with 'CNT' or 'CPT': ")
+    while True:
+        if country_or_capital == 'CNT':
+            return 0
+        elif country_or_capital == 'CPT':
+            return 1
+        else:
+            print("Choose from 'CNT' or 'CPT'")
+
+CNT_or_CPT = country_or_capital()
+
+import random
+
+def random_line():
+    f = open("countries-and-capitals.txt", "r")
+    file_content = f.read()
+    word_list = file_content.split('\n')
+    word_line = random.choice(word_list)
+    return word_line.upper()
+
+word_line = random_line()
+print(word_line)
+
+def choosen_word (CNT_or_CPT, word_line):
+    word_line_split = word_line.split('|')
+    if CNT_or_CPT == 0:
+        return word_line_split[0]
+    else:
+        return word_line_split[1]
+
+word = choosen_word(CNT_or_CPT,word_line)
+print(f"The choosen word is {word}") 
 
 
 # STEP 2
@@ -39,12 +81,8 @@ print(choosen_lives)
 word_to_guess = "Cairo" # sample data, normally the word should be chosen from the countries-and-capitals.txt
 lives = 5 # sample data, normally the lives should be chosen based on the difficulty
 
-import random
-list_ = open("countries-and-capitals.txt").read().split()
 
-def get_word():
-    word = random.choice(word_to_guess)
-    return word.upper()
+
 
 # STEP 3
 # display the chosen word to guess with all letters replaced by "_"

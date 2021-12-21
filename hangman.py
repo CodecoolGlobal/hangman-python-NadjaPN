@@ -87,7 +87,7 @@ print(f"The choosen word is {word_to_guess}")
 # for example instead of "Cairo" display "_ _ _ _ _"
 
 def display(word_to_guess):
-    word_completion = "_ " * (len(word_to_guess)-1)
+    word_completion = "_" * (len(word_to_guess)-1)
     return word_completion
 
 secret_word = display(word_to_guess)
@@ -126,6 +126,24 @@ print(guess)
 # if the letter is present in the word iterate through all the letters in the variable
 # word_to_guess. If that letter is present in the already_tried_letters then display it,
 # otherwise display "_".
+
+def present(guess, word_to_guess, secret_word:str, lives):
+    new_secret_word = []
+    if guess in word_to_guess:
+        for i in range(len(word_to_guess)-1):
+            if word_to_guess[i] == guess:
+                new_secret_word.append(guess)
+            else:
+                new_secret_word.append(secret_word[i])
+        secret_word = ("".join(new_secret_word))
+        return secret_word, lives
+    else:
+        lives -= 1
+        print("Lives ", lives)
+    return secret_word, lives
+
+secret_word, lives = present(guess, word_to_guess, secret_word, lives)
+print(secret_word)
 
 
 

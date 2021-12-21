@@ -213,12 +213,12 @@ def main():
             secret_word, lives = present(guess, word_to_guess, secret_word, lives)
             print(secret_word)
             if not secret_word.__contains__("_") and lives > 0:
-                print("\n Congratulations! You guessed the word!\n")
+                print("\n Congratulations! You guessed the word!\n\n\n")
                 break
             elif lives == 0:
-                print("\n Sorry you lost the game!")
+                print("\n Sorry you lost the game!\n\n\n")
                 break
-        replay = input("Do you want to play again? (Y/N) ").upper()
+        replay = input("Do you want to play again? (Y/N) \n\n\n").upper()
         if replay == "N":
             break
 

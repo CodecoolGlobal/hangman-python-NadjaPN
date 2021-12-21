@@ -87,8 +87,13 @@ print(f"The choosen word is {word_to_guess}")
 # for example instead of "Cairo" display "_ _ _ _ _"
 
 def display(word_to_guess):
-    word_completion = "_" * (len(word_to_guess)-1)
-    return word_completion
+    secret_word = ""
+    for i in word_to_guess:
+        if i == " ":
+            secret_word += " "
+        else:
+            secret_word += "_"
+    return secret_word
 
 secret_word = display(word_to_guess)
 print("Your word to guess:")

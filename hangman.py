@@ -15,14 +15,11 @@ def choosing_level():
 def lives_value(choosing_int):
     lives = 0
     if choosing_int == 1:
-        lives = 8
-            #import smaller word
+        lives = 9
     elif choosing_int == 2:
-        lives = 7
-            #import longer word
+        lives = 8
     else:
-        lives = 6
-            #import longest word
+        lives = 7
     return lives
 
 
@@ -44,7 +41,7 @@ def random_line():
     word_list = file_content.split('\n')
     word_line = random.choice(word_list)
     f.close()
-    return word_line.upper()
+    return word_line
 
 def choosen_word (CNT_or_CPT, word_line):
     word_line_split = word_line.split('|')
@@ -73,105 +70,14 @@ def validate(already_tried_letters):
                 return guess_letter
 
 def present(guess, word_to_guess, secret_word:str, lives):
-    hangman = (
-
-"""
-   _________
-    |/        
-    |              
-    |                
-    |                 
-    |               
-    |                   
-    |___                 
-    """,
-
-"""
-   _________
-    |/   |      
-    |              
-    |                
-    |                 
-    |               
-    |                   
-    |___                 
-    H""",
-
-"""
-   _________       
-    |/   |              
-    |   (_)
-    |                         
-    |                       
-    |                         
-    |                          
-    |___                       
-    HA""",
-
-"""
-   ________               
-    |/   |                   
-    |   (_)                  
-    |    |                     
-    |    |                    
-    |                           
-    |                            
-    |___                    
-    HAN""",
-
-
-"""
-   _________             
-    |/   |               
-    |   (_)                   
-    |   /|                     
-    |    |                    
-    |                        
-    |                          
-    |___                          
-    HANG""",
-
-
-"""
-   _________              
-    |/   |                     
-    |   (_)                     
-    |   /|\                    
-    |    |                       
-    |                             
-    |                            
-    |___                          
-    HANGM""",
-
-
-
-"""
-   ________                   
-    |/   |                         
-    |   (_)                      
-    |   /|\                             
-    |    |                          
-    |   /                            
-    |                                  
-    |___                              
-    HANGMA""",
-
-
-"""
-   ________
-    |/   |     
-    |   (_)    
-    |   /|\           
-    |    |        
-    |   / \        
-    |               
-    |___           
-    HANGMAN""")
+    f = open("ascii_art.py", "r")
+    file_content:tuple = f.read()
     new_secret_word = []
-    if guess in word_to_guess:
+    if guess in word_to_guess.upper():
+        print(f"Lives: {lives}")
         for i in range(len(word_to_guess)):
-            if word_to_guess[i] == guess:
-                new_secret_word.append(guess)
+            if word_to_guess[i].upper() == guess:
+                new_secret_word.append(word_to_guess[i])
             else:
                 new_secret_word.append(secret_word[i])
         secret_word = ("".join(new_secret_word))
@@ -179,7 +85,8 @@ def present(guess, word_to_guess, secret_word:str, lives):
     else:
         lives -= 1
         print("Lives ", lives)
-        print(hangman[7 - lives])
+        print(file_content[9 - lives])
+    f.close()
     return secret_word, lives
 
 def main():
@@ -200,16 +107,15 @@ def main():
         already_tried_letters = []
         while True:
             guess = validate(already_tried_letters)
-            print(guess)
             secret_word, lives = present(guess, word_to_guess, secret_word, lives)
             print(secret_word)
             if not secret_word.__contains__("_") and lives > 0:
                 print("\n Congratulations! You guessed the word!\n\n\n")
                 break
             elif lives == 0:
-                print(f"\n Sorry you lost the game! The word was{word_to_guess}.\n")
+                print(f"\n Sorry you lost the game! The word was {word_to_guess}.\n")
                 break
-        replay = input("Do you want to play again? (Y/N) \n\n\n").upper()
+        replay = input("Do you want to play again? (Y/n) \n\n\n").upper()
         if replay == "N":
             break
 

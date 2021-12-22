@@ -1,6 +1,6 @@
 
 def choosing_level():
-    choosing = input("Choose a difficulity (1-3): ")
+    choosing = input(f"{bcolors.WARNING}Choose a difficulity (1-3): ")
     while True:
         try:
             choosing_int = int(choosing)
@@ -24,14 +24,14 @@ def lives_value(choosing_int):
 
 
 def country_or_capital():
-    country_or_capital = input("Choose from countries or capitals with 'CNT' or 'CPT': ").upper()
+    country_or_capital = input(f"{bcolors.WARNING}Choose from countries or capitals with 'CNT' or 'CPT': ").upper()
     while True:
         if country_or_capital == 'CNT':
             return 0
         elif country_or_capital == 'CPT':
             return 1
         else:
-            country_or_capital = input("Choose from 'CNT' or 'CPT'")
+            country_or_capital = input("Choose from 'CNT' or 'CPT'").upper()
 
 import random
 
@@ -60,11 +60,11 @@ def display(word_to_guess):
     return secret_word
 
 def validate(already_tried_letters):
-        guess_letter = input("Please guess a letter or word: ").upper()
+        guess_letter = input(f"{bcolors.WARNING}Please guess a letter or word: ").upper()
         while True:
             if guess_letter in already_tried_letters:
                 print("You already guessed this letter!")
-                guess_letter = input("Try an other one: ")
+                guess_letter = input("Try an other one: ").upper()
             else:
                 already_tried_letters.append(guess_letter)
                 return guess_letter
@@ -74,7 +74,7 @@ def present(guess, word_to_guess, secret_word:str, lives):
     file_content:tuple = f.read()
     new_secret_word = []
     if guess in word_to_guess.upper():
-        print(f"Lives: {lives}")
+        print(f"{bcolors.FAIL}Lives: {lives}")
         for i in range(len(word_to_guess)):
             if word_to_guess[i].upper() == guess:
                 new_secret_word.append(word_to_guess[i])
@@ -84,25 +84,38 @@ def present(guess, word_to_guess, secret_word:str, lives):
         return secret_word, lives
     else:
         lives -= 1
-        print("Lives ", lives)
+        print(f"{bcolors.FAIL}Lives ", lives)
         print(file_content[9 - lives])
     f.close()
     return secret_word, lives
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 def main():
     print("\n" * 5)
-    print("Hello to our Hangman Game!\n")
+    print(f"{bcolors.OKGREEN}""Hello to our Hangman Game!")
+    print(f"{bcolors.HEADER}\n")
     while True:
         print("Please choose a level to start!")
         choosing_int = choosing_level()
-        print(f"You choosed the difficulity {choosing_int}.")
+        print(f"{bcolors.WARNING}You choosed the difficulity {choosing_int}.")
         lives = lives_value(choosing_int)
-        print(f"You have {lives} lives.")
+        print(f"{bcolors.HEADER}You have {lives} lives.")
         CNT_or_CPT = country_or_capital()
         word_line = random_line()
         word_to_guess = choosen_word(CNT_or_CPT,word_line) 
         secret_word = display(word_to_guess)
-        print("\nYour word to guess:")
+        print("\n")
+        print(f"{bcolors.HEADER}Your word to guess:")
         print(secret_word)
         already_tried_letters = []
         while True:
@@ -110,10 +123,12 @@ def main():
             secret_word, lives = present(guess, word_to_guess, secret_word, lives)
             print(secret_word)
             if not secret_word.__contains__("_") and lives > 0:
-                print("\n Congratulations! You guessed the word!\n\n\n")
+                print("\n")
+                print(f"{bcolors.OKGREEN} Congratulations! You guessed the word!\n\n\n")
                 break
             elif lives == 0:
-                print(f"\n Sorry you lost the game! The word was {word_to_guess}.\n")
+                print("\n")
+                print(f"{bcolors.FAIL} Sorry you lost the game! The word was {word_to_guess}.\n")
                 break
         replay = input("Do you want to play again? (Y/n) \n\n\n").upper()
         if replay == "N":

@@ -18,10 +18,10 @@ def lives_value(choosing_int):
         lives = 8
             #import smaller word
     elif choosing_int == 2:
-        lives = 6
+        lives = 7
             #import longer word
     else:
-        lives = 4
+        lives = 6
             #import longest word
     return lives
 
@@ -43,6 +43,7 @@ def random_line():
     file_content = f.read()
     word_list = file_content.split('\n')
     word_line = random.choice(word_list)
+    f.close()
     return word_line.upper()
 
 def choosen_word (CNT_or_CPT, word_line):
@@ -181,14 +182,6 @@ def present(guess, word_to_guess, secret_word:str, lives):
         print(hangman[7 - lives])
     return secret_word, lives
 
-# STEP 7
-# check if the variable already_tried_letters already contains all the letters necessary
-# to build the value in the variable word_to_guess. If so display a winning message and exit
-# the app.
-# If you still have letters that are not guessed check if you have a non negative amount of lives
-# left. If not print a loosing message and exit the app.
-# If neither of the 2 conditions mentioned above go back to STEP 4
-
 def main():
     print("\n" * 5)
     print("Hello to our Hangman Game!\n")
@@ -200,11 +193,9 @@ def main():
         print(f"You have {lives} lives.")
         CNT_or_CPT = country_or_capital()
         word_line = random_line()
-        print(word_line)
-        word_to_guess = choosen_word(CNT_or_CPT,word_line)
-        print(f"The choosen word is {word_to_guess}") 
+        word_to_guess = choosen_word(CNT_or_CPT,word_line) 
         secret_word = display(word_to_guess)
-        print("Your word to guess:")
+        print("\nYour word to guess:")
         print(secret_word)
         already_tried_letters = []
         while True:
@@ -216,7 +207,7 @@ def main():
                 print("\n Congratulations! You guessed the word!\n")
                 break
             elif lives == 0:
-                print("\n Sorry you lost the game!")
+                print(f"\n Sorry you lost the game! The word was{word_to_guess}.\n")
                 break
         replay = input("Do you want to play again? (Y/N) ").upper()
         if replay == "N":

@@ -44,19 +44,19 @@ def random_line():
     return word_line
 
 def choosen_word (CNT_or_CPT, word_line):
-    word_line_split = word_line.split('|')
+    word_line_split = word_line.split(' | ')
     if CNT_or_CPT == 0:
         return word_line_split[0]
     else:
         return word_line_split[1]
 
 def display(word_to_guess):
-    secret_word = ""
+    secret_word = []
     for i in word_to_guess:
         if i == " ":
-            secret_word += " "
+            secret_word.append(" ")
         else:
-            secret_word += "_"
+            secret_word.append("_")
     return secret_word
 
 def validate(already_tried_letters):
@@ -69,7 +69,7 @@ def validate(already_tried_letters):
                 already_tried_letters.append(guess_letter)
                 return guess_letter
 
-def present(guess, word_to_guess, secret_word:str, lives):
+def present(guess, word_to_guess, secret_word:list, lives):
     f = open("ascii_art.py", "r")
     file_content:tuple = f.read()
     new_secret_word = []
@@ -80,7 +80,7 @@ def present(guess, word_to_guess, secret_word:str, lives):
                 new_secret_word.append(word_to_guess[i])
             else:
                 new_secret_word.append(secret_word[i])
-        secret_word = ("".join(new_secret_word))
+        secret_word = new_secret_word
         return secret_word, lives
     else:
         lives -= 1
@@ -116,12 +116,12 @@ def main():
         secret_word = display(word_to_guess)
         print("\n")
         print(f"{bcolors.HEADER}Your word to guess:")
-        print(secret_word)
+        print(" ".join(secret_word))
         already_tried_letters = []
         while True:
             guess = validate(already_tried_letters)
             secret_word, lives = present(guess, word_to_guess, secret_word, lives)
-            print(secret_word)
+            print(" ".join(secret_word))
             if not secret_word.__contains__("_") and lives > 0:
                 print("\n")
                 print(f"{bcolors.OKGREEN} Congratulations! You guessed the word!\n\n\n")
@@ -130,7 +130,7 @@ def main():
                 print("\n")
                 print(f"{bcolors.FAIL} Sorry you lost the game! The word was {word_to_guess}.\n")
                 break
-        replay = input("Do you want to play again? (Y/n) \n\n\n").upper()
+        replay = input(f"{bcolors.OKGREEN}Do you want to play again? (Y/n) \n\n\n").upper()
         if replay == "N":
             break
 

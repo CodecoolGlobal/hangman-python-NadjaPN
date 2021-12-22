@@ -71,7 +71,8 @@ def validate(already_tried_letters):
 
 def present(guess, word_to_guess, secret_word:list, lives):
     f = open("ascii_art.py", "r")
-    file_content:tuple = f.read()
+    file_content = f.read()
+    pictures = file_content.split(",")
     new_secret_word = []
     if guess in word_to_guess.upper():
         print(f"{bcolors.FAIL}Lives: {lives}")
@@ -85,7 +86,7 @@ def present(guess, word_to_guess, secret_word:list, lives):
     else:
         lives -= 1
         print(f"{bcolors.FAIL}Lives ", lives)
-        print(file_content[9 - lives])
+        print(pictures[8 - lives])
     f.close()
     return secret_word, lives
 
